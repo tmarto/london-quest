@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import '../data/trip_data.dart';
 import '../models/day.dart';
 import '../services/score_service.dart';
@@ -18,11 +19,21 @@ class _HomeScreenState extends State<HomeScreen> {
   int _totalScore = 0;
   List<int> _dayScores = List.filled(4, 0);
   final int _totalMax = ScoreService.getTotalMaxScore();
+  String _buildVersion = '';
 
   @override
   void initState() {
     super.initState();
     _loadScores();
+    _loadVersion();
+  }
+
+  Future<void> _loadVersion() async {
+    final info = await PackageInfo.fromPlatform();
+    if (!mounted) return;
+    setState(() {
+      _buildVersion = 'v${info.version}+${info.buildNumber}';
+    });
   }
 
   Future<void> _loadScores() async {
@@ -188,7 +199,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               Expanded(
                 child: ListView.builder(
-                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 20),
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
                   itemCount: tripDays.length,
                   itemBuilder: (ctx, i) {
                     final day = tripDays[i];
@@ -209,6 +220,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
               ),
+              if (_buildVersion.isNotEmpty)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: Text(
+                    _buildVersion,
+                    style: const TextStyle(
+                      color: Colors.white24,
+                      fontSize: 10,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
             ],
           ),
         ),
