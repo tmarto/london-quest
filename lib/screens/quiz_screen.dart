@@ -10,11 +10,13 @@ import 'result_screen.dart';
 class QuizScreen extends StatefulWidget {
   final Attraction attraction;
   final String playerName;
+  final bool useEnglish;
 
   const QuizScreen({
     super.key,
     required this.attraction,
     required this.playerName,
+    this.useEnglish = false,
   });
 
   @override
@@ -36,7 +38,8 @@ class _QuizScreenState extends State<QuizScreen> {
 
   void _shuffleQuestion() {
     final q = _questions[_currentIndex];
-    final indexed = q.options.asMap().entries.toList()..shuffle(Random());
+    final opts = q.localOptions(widget.useEnglish);
+    final indexed = opts.asMap().entries.toList()..shuffle(Random());
     _shuffledOptions = indexed.map((e) => e.value).toList();
     _shuffledCorrectIndex =
         indexed.indexWhere((e) => e.key == q.correctIndex);
@@ -82,8 +85,9 @@ class _QuizScreenState extends State<QuizScreen> {
 
   Future<void> _nextQuestion() async {
     if (_currentIndex >= _questions.length - 1) {
+      final multiplier = widget.useEnglish ? 2 : 1;
       await ScoreService.saveAttractionScore(
-          widget.playerName, widget.attraction.id, _score,);
+          widget.playerName, widget.attraction.id, _score * multiplier,);
       if (!mounted) return;
       Navigator.pushReplacement(
         context,
@@ -160,6 +164,22 @@ class _QuizScreenState extends State<QuizScreen> {
                               color: Colors.white70, fontSize: 13,),
                           overflow: TextOverflow.ellipsis,
                         ),
+                        if (widget.useEnglish) ...[
+                          const SizedBox(width: 6),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 6, vertical: 2,),
+                            decoration: BoxDecoration(
+                              color: Colors.amber.withValues(alpha: 0.2),
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            child: const Text(
+                              '🇬🇧 2×',
+                              style: TextStyle(
+                                  color: Colors.amber, fontSize: 11,),
+                            ),
+                          ),
+                        ],
                       ],
                     ),
                     AnimatedContainer(
@@ -244,7 +264,7 @@ class _QuizScreenState extends State<QuizScreen> {
                     border: Border.all(color: Colors.white12),
                   ),
                   child: Text(
-                    q.text,
+                    q.localText(widget.useEnglish),
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 17,
@@ -330,7 +350,7 @@ class _QuizScreenState extends State<QuizScreen> {
                           color: Colors.amber.withValues(alpha: 0.35),),
                     ),
                     child: Text(
-                      '💡 ${q.funFact}',
+                      '💡 ${q.localFunFact(widget.useEnglish)}',
                       style: const TextStyle(
                         color: Colors.amber,
                         fontSize: 13,

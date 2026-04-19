@@ -89,4 +89,15 @@ class ScoreService {
 
   static int getTotalMaxScore() =>
       attractionById.values.fold(0, (sum, a) => sum + a.maxScore);
+
+  // ── Reset ─────────────────────────────────────────────────────────────────
+
+  static Future<void> resetDayScores(String player, int dayNumber) async {
+    final prefs = await SharedPreferences.getInstance();
+    final schedule = await getSchedule();
+    final ids = schedule[dayNumber] ?? [];
+    for (final id in ids) {
+      await prefs.remove('score_${player}_$id');
+    }
+  }
 }

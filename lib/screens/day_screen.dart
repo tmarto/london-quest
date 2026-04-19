@@ -28,7 +28,6 @@ class _DayScreenState extends State<DayScreen> {
   }
 
   Future<void> _loadScores() async {
-    // Load custom schedule for this day
     final schedule = await ScoreService.getSchedule();
     final ids = schedule[widget.day.number] ??
         widget.day.attractions.map((a) => a.id).toList();
@@ -39,7 +38,8 @@ class _DayScreenState extends State<DayScreen> {
 
     final scores = <String, int>{};
     for (final a in attractions) {
-      scores[a.id] = await ScoreService.getAttractionScore(widget.playerName, a.id);
+      scores[a.id] =
+          await ScoreService.getAttractionScore(widget.playerName, a.id);
     }
     final dayScore = scores.values.fold(0, (sum, s) => sum + s);
     if (!mounted) return;
@@ -50,29 +50,171 @@ class _DayScreenState extends State<DayScreen> {
     });
   }
 
-  void _startQuiz(Attraction attraction) {
+  Future<void> _confirmResetDay() async {
+    final confirm = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: const Color(0xFF1a1a2e),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: const Text(
+          'Resetar pontos do dia?',
+          style: TextStyle(color: Colors.white, fontSize: 16),
+        ),
+        content: const Text(
+          'Todos os pontos das atrações deste dia serão apagados.',
+          style: TextStyle(color: Colors.white60, fontSize: 13),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: const Text('Cancelar',
+                style: TextStyle(color: Colors.white54),),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            child: const Text('Resetar',
+                style: TextStyle(color: Color(0xFFDC143C)),),
+          ),
+        ],
+      ),
+    );
+    if (confirm == true) {
+      await ScoreService.resetDayScores(widget.playerName, widget.day.number);
+      await _loadScores();
+    }
+  }
+
+  Future<void> _startQuiz(Attraction attraction) async {
     if (widget.playerName == 'Ana') {
-      Navigator.push(
+      await Navigator.push(
         context,
         MaterialPageRoute(
           builder: (_) => TeachScreen(attraction: attraction),
         ),
       );
-    } else {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => QuizScreen(
-            attraction: attraction,
-            playerName: widget.playerName,
+      return;
+    }
+
+    // Language selection dialog
+    if (!mounted) return;
+    final useEnglish = await showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) => Dialog(
+        backgroundColor: const Color(0xFF1a1a2e),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(attraction.emoji,
+                  style: const TextStyle(fontSize: 44),),
+              const SizedBox(height: 12),
+              Text(
+                attraction.name,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 6),
+              const Text(
+                'Escolhe o idioma do quiz',
+                style: TextStyle(color: Colors.white54, fontSize: 13),
+              ),
+              const SizedBox(height: 20),
+              // PT button
+              SizedBox(
+                width: double.infinity,
+                child: OutlinedButton(
+                  onPressed: () => Navigator.pop(ctx, false),
+                  style: OutlinedButton.styleFrom(
+                    side: BorderSide(
+                        color: Colors.white.withValues(alpha: 0.3),),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),),
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                  ),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('🇵🇹', style: TextStyle(fontSize: 22)),
+                      SizedBox(width: 10),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Português',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,),),
+                          Text('pontos normais',
+                              style: TextStyle(
+                                  color: Colors.white38, fontSize: 11,),),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              // EN button
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () => Navigator.pop(ctx, true),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF1B4B8A),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),),
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                  ),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('🇬🇧', style: TextStyle(fontSize: 22)),
+                      SizedBox(width: 10),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('English',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,),),
+                          Text('2× pontos!',
+                              style: TextStyle(
+                                  color: Colors.amber, fontSize: 11,),),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
-      ).then((_) => _loadScores());
-    }
+      ),
+    );
+
+    if (useEnglish == null || !mounted) return;
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => QuizScreen(
+          attraction: attraction,
+          playerName: widget.playerName,
+          useEnglish: useEnglish,
+        ),
+      ),
+    );
+    _loadScores();
   }
 
   @override
   Widget build(BuildContext context) {
+    final isAna = widget.playerName == 'Ana';
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -118,6 +260,13 @@ class _DayScreenState extends State<DayScreen> {
                         ],
                       ),
                     ),
+                    if (isAna)
+                      IconButton(
+                        icon: const Icon(Icons.refresh,
+                            color: Colors.white38, size: 20,),
+                        tooltip: 'Resetar pontos do dia',
+                        onPressed: _confirmResetDay,
+                      ),
                   ],
                 ),
               ),
@@ -131,14 +280,16 @@ class _DayScreenState extends State<DayScreen> {
                     color: Colors.white.withValues(alpha: 0.07),
                     borderRadius: BorderRadius.circular(14),
                     border: Border.all(
-                        color: const Color(0xFFDC143C).withValues(alpha: 0.4),),
+                        color:
+                            const Color(0xFFDC143C).withValues(alpha: 0.4),),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text(
                         '⭐ Pontos do dia',
-                        style: TextStyle(color: Colors.white70, fontSize: 14),
+                        style:
+                            TextStyle(color: Colors.white70, fontSize: 14),
                       ),
                       Text(
                         '$_dayScore / ${_attractions.fold(0, (s, a) => s + a.maxScore)}',
@@ -176,7 +327,7 @@ class _DayScreenState extends State<DayScreen> {
                     return _AttractionCard(
                       attraction: a,
                       score: score,
-                      isTeacher: widget.playerName == 'Ana',
+                      isTeacher: isAna,
                       onTap: () => _startQuiz(a),
                     );
                   },
@@ -225,7 +376,6 @@ class _AttractionCard extends StatelessWidget {
         ),
         child: Row(
           children: [
-            // Attraction image panel
             Container(
               width: 88,
               height: 96,
@@ -298,8 +448,10 @@ class _AttractionCard extends StatelessWidget {
                               horizontal: 8, vertical: 3,),
                           decoration: BoxDecoration(
                             color: isTeacher
-                                ? const Color(0xFF4CAF50).withValues(alpha: 0.2)
-                                : const Color(0xFFDC143C).withValues(alpha: 0.2),
+                                ? const Color(0xFF4CAF50)
+                                    .withValues(alpha: 0.2)
+                                : const Color(0xFFDC143C)
+                                    .withValues(alpha: 0.2),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(
