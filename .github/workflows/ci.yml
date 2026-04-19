@@ -16,7 +16,7 @@ env:
 jobs:
   # ── Job 1: Static analysis + unit tests ──────────────────────────────────
   lint-and-test:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
@@ -68,7 +68,7 @@ jobs:
 
   # ── Job 2: Integration tests (E2E on Android emulator) ───────────────────
   integration-test:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     needs: lint-and-test
 
     steps:
@@ -104,7 +104,7 @@ jobs:
 
   # ── Job 3: Build Android APK ──────────────────────────────────────────────
   build-android:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     needs: [ lint-and-test, integration-test ]
 
     steps:
@@ -200,7 +200,7 @@ jobs:
   # ── Job 5: Publish GitHub Release (tags only) ─────────────────────────────
   release:
     if: startsWith(github.ref, 'refs/tags/v')
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     needs: [ build-android, build-ios ]
 
     steps:
