@@ -15,10 +15,16 @@ Future<void> main() async {
 /// Fails silently when [firebase_options.dart] contains placeholder values so
 /// the app still runs during development before a real Firebase project is set up.
 Future<void> _initCrashlytics() async {
+  // Skip init entirely when placeholder credentials are present.
+  // Real credentials never contain 'REPLACE_WITH'; this avoids a network
+  // hang on iOS where Firebase.initializeApp() with fake values can block
+  // indefinitely instead of throwing.
+  final opts = DefaultFirebaseOptions.currentPlatform;
+  if (opts.projectId.startsWith('REPLACE_WITH')) return;
+
   try {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
+    await Firebase.initializeApp(options: opts)
+        .timeout(const Duration(seconds: 10));
     // Forward Flutter framework errors to Crashlytics
     FlutterError.onError =
         FirebaseCrashlytics.instance.recordFlutterFatalError;
@@ -28,7 +34,7 @@ Future<void> _initCrashlytics() async {
       return true;
     };
   } catch (_) {
-    // Firebase not yet configured — run without crash reporting.
+    // Firebase not yet configured or unreachable — run without crash reporting.
     // To enable: run `flutterfire configure` and replace lib/firebase_options.dart
   }
 }
