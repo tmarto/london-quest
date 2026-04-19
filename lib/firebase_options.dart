@@ -15,6 +15,8 @@ class DefaultFirebaseOptions {
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
+      case TargetPlatform.iOS:
+        return ios;
       default:
         throw UnsupportedError(
           'DefaultFirebaseOptions not configured for ${defaultTargetPlatform.name}. '
@@ -30,5 +32,14 @@ class DefaultFirebaseOptions {
     messagingSenderId: 'REPLACE_WITH_SENDER_ID',
     projectId: 'REPLACE_WITH_PROJECT_ID',
     storageBucket: 'REPLACE_WITH_PROJECT_ID.appspot.com',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'REPLACE_WITH_REAL_IOS_API_KEY',
+    appId: 'REPLACE_WITH_REAL_IOS_APP_ID',
+    messagingSenderId: 'REPLACE_WITH_SENDER_ID',
+    projectId: 'REPLACE_WITH_PROJECT_ID',
+    storageBucket: 'REPLACE_WITH_PROJECT_ID.appspot.com',
+    iosBundleId: 'com.example.londonQuest',
   );
 }
