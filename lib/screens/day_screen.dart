@@ -51,18 +51,54 @@ class _DayScreenState extends State<DayScreen> {
   }
 
   Future<void> _confirmResetDay() async {
-    final confirm = await showDialog<bool>(
+    // Step 1: pick whose scores to reset
+    final targetPlayer = await showDialog<String>(
       context: context,
       builder: (ctx) => AlertDialog(
         backgroundColor: const Color(0xFF1a1a2e),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         title: const Text(
-          'Resetar pontos do dia?',
+          'Resetar pontos de quem?',
           style: TextStyle(color: Colors.white, fontSize: 16),
         ),
         content: const Text(
-          'Todos os pontos das atrações deste dia serão apagados.',
+          'Escolhe o jogador cujos pontos deste dia serão apagados.',
           style: TextStyle(color: Colors.white60, fontSize: 13),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('Cancelar',
+                style: TextStyle(color: Colors.white54),),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, 'Pedro'),
+            child: const Text('👦 Pedro',
+                style: TextStyle(color: Colors.white),),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, 'Ines'),
+            child: const Text('👧 Inês',
+                style: TextStyle(color: Colors.white),),
+          ),
+        ],
+      ),
+    );
+    if (targetPlayer == null || !mounted) return;
+
+    // Step 2: confirm
+    final confirm = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: const Color(0xFF1a1a2e),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: Text(
+          'Resetar pontos de $targetPlayer?',
+          style: const TextStyle(color: Colors.white, fontSize: 16),
+        ),
+        content: Text(
+          'Os pontos de $targetPlayer neste dia serão apagados.',
+          style: const TextStyle(color: Colors.white60, fontSize: 13),
         ),
         actions: [
           TextButton(
@@ -79,7 +115,7 @@ class _DayScreenState extends State<DayScreen> {
       ),
     );
     if (confirm == true) {
-      await ScoreService.resetDayScores(widget.playerName, widget.day.number);
+      await ScoreService.resetDayScores(targetPlayer, widget.day.number);
       await _loadScores();
     }
   }
