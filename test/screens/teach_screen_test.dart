@@ -42,7 +42,7 @@ void main() {
     testWidgets('shows fun fact for first question', (tester) async {
       await tester.pumpWidget(wrap());
       expect(find.textContaining(attraction.questions[0].funFact),
-          findsOneWidget);
+          findsOneWidget,);
     });
 
     testWidgets('prev button disabled on first question', (tester) async {

@@ -71,7 +71,7 @@ class _QuizScreenState extends State<QuizScreen> {
   Future<void> _nextQuestion() async {
     if (_currentIndex >= _questions.length - 1) {
       await ScoreService.saveAttractionScore(
-          widget.playerName, widget.attraction.id, _score);
+          widget.playerName, widget.attraction.id, _score,);
       if (!mounted) return;
       Navigator.pushReplacement(
         context,
@@ -95,19 +95,19 @@ class _QuizScreenState extends State<QuizScreen> {
   }
 
   Color _optionColor(int index) {
-    if (!_answered) return Colors.white.withOpacity(0.06);
+    if (!_answered) return Colors.white.withValues(alpha: 0.06);
     if (index == _questions[_currentIndex].correctIndex) {
-      return Colors.green.withOpacity(0.25);
+      return Colors.green.withValues(alpha: 0.25);
     }
-    if (index == _selectedAnswer) return Colors.red.withOpacity(0.25);
-    return Colors.white.withOpacity(0.04);
+    if (index == _selectedAnswer) return Colors.red.withValues(alpha: 0.25);
+    return Colors.white.withValues(alpha: 0.04);
   }
 
   Color _optionBorderColor(int index) {
-    if (!_answered) return Colors.white.withOpacity(0.15);
+    if (!_answered) return Colors.white.withValues(alpha: 0.15);
     if (index == _questions[_currentIndex].correctIndex) return Colors.green;
     if (index == _selectedAnswer) return Colors.red;
-    return Colors.white.withOpacity(0.08);
+    return Colors.white.withValues(alpha: 0.08);
   }
 
   @override
@@ -144,7 +144,7 @@ class _QuizScreenState extends State<QuizScreen> {
                         Text(
                           widget.attraction.name,
                           style: const TextStyle(
-                              color: Colors.white70, fontSize: 13),
+                              color: Colors.white70, fontSize: 13,),
                           overflow: TextOverflow.ellipsis,
                         ),
                       ],
@@ -152,11 +152,11 @@ class _QuizScreenState extends State<QuizScreen> {
                     AnimatedContainer(
                       duration: const Duration(milliseconds: 300),
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 14, vertical: 6),
+                          horizontal: 14, vertical: 6,),
                       decoration: BoxDecoration(
                         color: _timeLeft <= 5
-                            ? Colors.red.withOpacity(0.2)
-                            : Colors.white.withOpacity(0.08),
+                            ? Colors.red.withValues(alpha: 0.2)
+                            : Colors.white.withValues(alpha: 0.08),
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
                           color:
@@ -203,7 +203,7 @@ class _QuizScreenState extends State<QuizScreen> {
                     Text(
                       '${_currentIndex + 1}/${_questions.length}',
                       style: const TextStyle(
-                          color: Colors.white38, fontSize: 13),
+                          color: Colors.white38, fontSize: 13,),
                     ),
                   ],
                 ),
@@ -226,7 +226,7 @@ class _QuizScreenState extends State<QuizScreen> {
                   width: double.infinity,
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.07),
+                    color: Colors.white.withValues(alpha: 0.07),
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(color: Colors.white12),
                   ),
@@ -292,12 +292,12 @@ class _QuizScreenState extends State<QuizScreen> {
                             ),
                             if (_answered && i == q.correctIndex)
                               const Text('✅',
-                                  style: TextStyle(fontSize: 18)),
+                                  style: TextStyle(fontSize: 18),),
                             if (_answered &&
                                 i == _selectedAnswer &&
                                 i != q.correctIndex)
                               const Text('❌',
-                                  style: TextStyle(fontSize: 18)),
+                                  style: TextStyle(fontSize: 18),),
                           ],
                         ),
                       ),
@@ -311,10 +311,10 @@ class _QuizScreenState extends State<QuizScreen> {
                     width: double.infinity,
                     padding: const EdgeInsets.all(14),
                     decoration: BoxDecoration(
-                      color: Colors.amber.withOpacity(0.1),
+                      color: Colors.amber.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(
-                          color: Colors.amber.withOpacity(0.35)),
+                          color: Colors.amber.withValues(alpha: 0.35),),
                     ),
                     child: Text(
                       '💡 ${q.funFact}',

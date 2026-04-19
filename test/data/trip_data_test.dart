@@ -19,7 +19,7 @@ void main() {
     test('all days have attractions', () {
       for (final d in tripDays) {
         expect(d.attractions, isNotEmpty,
-            reason: 'Day ${d.number} has no attractions');
+            reason: 'Day ${d.number} has no attractions',);
       }
     });
 
@@ -38,7 +38,7 @@ void main() {
 
   group('attractionById', () {
     test('has exactly 13 attractions', () =>
-        expect(attractionById.length, 13));
+        expect(attractionById.length, 13),);
 
     test('all attraction IDs are unique across days', () {
       final ids = tripDays
@@ -51,7 +51,7 @@ void main() {
       for (final day in tripDays) {
         for (final a in day.attractions) {
           expect(attractionById[a.id], isNotNull,
-              reason: '${a.id} missing from attractionById');
+              reason: '${a.id} missing from attractionById',);
         }
       }
     });
@@ -65,7 +65,7 @@ void main() {
     test('every attraction has exactly 10 questions', () {
       for (final a in attractionById.values) {
         expect(a.questions.length, 10,
-            reason: '${a.name} has ${a.questions.length} questions, expected 10');
+            reason: '${a.name} has ${a.questions.length} questions, expected 10',);
       }
     });
 
@@ -73,7 +73,7 @@ void main() {
       for (final a in attractionById.values) {
         for (final q in a.questions) {
           expect(q.options.length, 4,
-              reason: '"${q.text}" has ${q.options.length} options');
+              reason: '"${q.text}" has ${q.options.length} options',);
         }
       }
     });
@@ -82,7 +82,7 @@ void main() {
       for (final a in attractionById.values) {
         for (final q in a.questions) {
           expect(q.correctIndex, inInclusiveRange(0, 3),
-              reason: '"${q.text}" has invalid correctIndex ${q.correctIndex}');
+              reason: '"${q.text}" has invalid correctIndex ${q.correctIndex}',);
         }
       }
     });
@@ -96,7 +96,7 @@ void main() {
     test('all attractions have non-empty imageUrl', () {
       for (final a in attractionById.values) {
         expect(a.imageUrl, isNotEmpty,
-            reason: '${a.name} has empty imageUrl');
+            reason: '${a.name} has empty imageUrl',);
       }
     });
   });
@@ -112,7 +112,7 @@ void main() {
     test('no attraction appears in multiple days', () {
       final allIds = defaultSchedule.values.expand((list) => list).toList();
       expect(allIds.toSet().length, allIds.length,
-          reason: 'Duplicate attraction IDs found in default schedule');
+          reason: 'Duplicate attraction IDs found in default schedule',);
     });
 
     test('matches tripDays attraction order', () {

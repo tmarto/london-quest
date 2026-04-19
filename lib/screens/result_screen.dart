@@ -125,7 +125,7 @@ class _ResultScreenState extends State<ResultScreen>
                         vertical: 24,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.06),
+                        color: Colors.white.withValues(alpha: 0.06),
                         borderRadius: BorderRadius.circular(24),
                         border: Border.all(
                           color: const Color(0xFFDC143C),

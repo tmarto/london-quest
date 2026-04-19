@@ -95,7 +95,7 @@ class _DayScreenState extends State<DayScreen> {
                       onPressed: () => Navigator.pop(context),
                     ),
                     Text(widget.day.emoji,
-                        style: const TextStyle(fontSize: 26)),
+                        style: const TextStyle(fontSize: 26),),
                     const SizedBox(width: 8),
                     Expanded(
                       child: Column(
@@ -104,7 +104,7 @@ class _DayScreenState extends State<DayScreen> {
                           Text(
                             'Dia ${widget.day.number}  •  ${widget.day.date}',
                             style: const TextStyle(
-                                color: Colors.white38, fontSize: 11),
+                                color: Colors.white38, fontSize: 11,),
                           ),
                           Text(
                             widget.day.title,
@@ -126,12 +126,12 @@ class _DayScreenState extends State<DayScreen> {
                 padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
                 child: Container(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 20, vertical: 14),
+                      horizontal: 20, vertical: 14,),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.07),
+                    color: Colors.white.withValues(alpha: 0.07),
                     borderRadius: BorderRadius.circular(14),
                     border: Border.all(
-                        color: const Color(0xFFDC143C).withOpacity(0.4)),
+                        color: const Color(0xFFDC143C).withValues(alpha: 0.4),),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -159,7 +159,7 @@ class _DayScreenState extends State<DayScreen> {
                   child: Text(
                     'Atrações do dia',
                     style: TextStyle(
-                      color: Colors.white.withOpacity(0.55),
+                      color: Colors.white.withValues(alpha: 0.55),
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
                     ),
@@ -214,11 +214,11 @@ class _AttractionCard extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.only(bottom: 12),
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.05),
+          color: Colors.white.withValues(alpha: 0.05),
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
             color: isTeacher
-                ? const Color(0xFF4CAF50).withOpacity(0.5)
+                ? const Color(0xFF4CAF50).withValues(alpha: 0.5)
                 : (isPerfect ? Colors.amber : Colors.white12),
             width: isTeacher ? 1 : (isPerfect ? 2 : 1),
           ),
@@ -232,7 +232,7 @@ class _AttractionCard extends StatelessWidget {
               decoration: BoxDecoration(
                 color: attraction.color,
                 borderRadius: const BorderRadius.horizontal(
-                    left: Radius.circular(15)),
+                    left: Radius.circular(15),),
               ),
               child: Center(
                 child: Text(
@@ -273,10 +273,10 @@ class _AttractionCard extends StatelessWidget {
                         if (hasPlayed) ...[
                           Container(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 8, vertical: 3),
+                                horizontal: 8, vertical: 3,),
                             decoration: BoxDecoration(
                               color: isPerfect
-                                  ? Colors.amber.withOpacity(0.2)
+                                  ? Colors.amber.withValues(alpha: 0.2)
                                   : Colors.white10,
                               borderRadius: BorderRadius.circular(8),
                             ),
@@ -295,11 +295,11 @@ class _AttractionCard extends StatelessWidget {
                         ],
                         Container(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 3),
+                              horizontal: 8, vertical: 3,),
                           decoration: BoxDecoration(
                             color: isTeacher
-                                ? const Color(0xFF4CAF50).withOpacity(0.2)
-                                : const Color(0xFFDC143C).withOpacity(0.2),
+                                ? const Color(0xFF4CAF50).withValues(alpha: 0.2)
+                                : const Color(0xFFDC143C).withValues(alpha: 0.2),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(

@@ -25,7 +25,7 @@ class AttractionImage extends StatelessWidget {
           loadingBuilder: (ctx, child, progress) {
             if (progress == null) return child;
             return Container(
-              color: Colors.white.withOpacity(0.05),
+              color: Colors.white.withValues(alpha: 0.05),
               child: Center(
                 child: CircularProgressIndicator(
                   value: progress.expectedTotalBytes != null
@@ -40,7 +40,7 @@ class AttractionImage extends StatelessWidget {
           },
           errorBuilder: (ctx, error, stack) {
             return Container(
-              color: Colors.white.withOpacity(0.05),
+              color: Colors.white.withValues(alpha: 0.05),
               child: Center(
                 child: Text(
                   fallbackEmoji,

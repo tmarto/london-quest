@@ -941,28 +941,28 @@ Map<int, List<String>> get defaultSchedule => {
 };
 
 final List<Day> tripDays = [
-  Day(
+  const Day(
     number: 1,
     date: '29 Abril',
     title: 'Westminster, Trafalgar & Piccadilly',
     emoji: '🕰️',
     attractions: [_westminster, _trafalgar],
   ),
-  Day(
+  const Day(
     number: 2,
     date: '30 Abril',
     title: 'South Kensington & Parques',
     emoji: '🦕',
     attractions: [_nhm, _hydepark, _sciencemuseum],
   ),
-  Day(
+  const Day(
     number: 3,
     date: '1 Maio',
     title: 'Museus, Cera & Palácio Real',
     emoji: '👑',
     attractions: [_britishmuseum, _tussauds, _buckingham],
   ),
-  Day(
+  const Day(
     number: 4,
     date: '2 Maio',
     title: 'Torre, Tamisa & Pontes',

@@ -58,19 +58,19 @@ class _EditScheduleScreenState extends State<EditScheduleScreen>
       builder: (ctx) => AlertDialog(
         backgroundColor: const Color(0xFF1a1a2e),
         title: const Text('Repor horário original?',
-            style: TextStyle(color: Colors.white)),
+            style: TextStyle(color: Colors.white),),
         content: const Text('Todas as alterações serão perdidas.',
-            style: TextStyle(color: Colors.white60)),
+            style: TextStyle(color: Colors.white60),),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
             child: const Text('Cancelar',
-                style: TextStyle(color: Colors.white38)),
+                style: TextStyle(color: Colors.white38),),
           ),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
             child: const Text('Repor',
-                style: TextStyle(color: Color(0xFFDC143C))),
+                style: TextStyle(color: Color(0xFFDC143C)),),
           ),
         ],
       ),
@@ -110,7 +110,7 @@ class _EditScheduleScreenState extends State<EditScheduleScreen>
                   children: [
                     IconButton(
                       icon: const Icon(Icons.arrow_back,
-                          color: Colors.white70),
+                          color: Colors.white70,),
                       onPressed: () => Navigator.pop(context),
                     ),
                     const Expanded(
@@ -119,22 +119,22 @@ class _EditScheduleScreenState extends State<EditScheduleScreen>
                         children: [
                           Text('✏️ Editar Horário',
                               style: TextStyle(
-                                  color: Colors.white38, fontSize: 11)),
+                                  color: Colors.white38, fontSize: 11,),),
                           Text('Organizar atrações por dia',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 15,
-                                  fontWeight: FontWeight.bold)),
+                                  fontWeight: FontWeight.bold,),),
                         ],
                       ),
                     ),
                     TextButton.icon(
                       onPressed: _reset,
                       icon: const Icon(Icons.refresh,
-                          color: Colors.white38, size: 16),
+                          color: Colors.white38, size: 16,),
                       label: const Text('Repor',
                           style: TextStyle(
-                              color: Colors.white38, fontSize: 12)),
+                              color: Colors.white38, fontSize: 12,),),
                     ),
                   ],
                 ),
@@ -143,20 +143,20 @@ class _EditScheduleScreenState extends State<EditScheduleScreen>
               Container(
                 margin: const EdgeInsets.fromLTRB(16, 8, 16, 0),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.06),
+                  color: Colors.white.withValues(alpha: 0.06),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: TabBar(
                   controller: _tabController,
                   dividerColor: Colors.transparent,
                   indicator: BoxDecoration(
-                    color: const Color(0xFFDC143C).withOpacity(0.8),
+                    color: const Color(0xFFDC143C).withValues(alpha: 0.8),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   labelColor: Colors.white,
                   unselectedLabelColor: Colors.white38,
                   labelStyle: const TextStyle(
-                      fontSize: 11, fontWeight: FontWeight.bold),
+                      fontSize: 11, fontWeight: FontWeight.bold,),
                   tabs: tripDays
                       .map((d) => Tab(text: '${d.emoji} Dia ${d.number}'))
                       .toList(),
@@ -168,7 +168,7 @@ class _EditScheduleScreenState extends State<EditScheduleScreen>
                 child: _loading
                     ? const Center(
                         child: CircularProgressIndicator(
-                            color: Color(0xFFDC143C)))
+                            color: Color(0xFFDC143C),),)
                     : TabBarView(
                         controller: _tabController,
                         children: tripDays.map((day) {
@@ -212,7 +212,7 @@ class _EditScheduleScreenState extends State<EditScheduleScreen>
                       disabledBackgroundColor: Colors.white12,
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12)),
+                          borderRadius: BorderRadius.circular(12),),
                       elevation: 0,
                     ),
                     child: Text(
@@ -255,7 +255,7 @@ class _DayTab extends StatelessWidget {
       return const Center(
         child: Text('Sem atrações neste dia.\nMove atrações de outros dias.',
             textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.white38, fontSize: 14)),
+            style: TextStyle(color: Colors.white38, fontSize: 14),),
       );
     }
 
@@ -273,7 +273,7 @@ class _DayTab extends StatelessWidget {
           key: ValueKey(a.id),
           margin: const EdgeInsets.only(bottom: 10),
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.06),
+            color: Colors.white.withValues(alpha: 0.06),
             borderRadius: BorderRadius.circular(14),
             border: Border.all(color: Colors.white12),
           ),
@@ -294,7 +294,7 @@ class _DayTab extends StatelessWidget {
                 ),
                 child: Center(
                   child: Text(a.emoji,
-                      style: const TextStyle(fontSize: 24)),
+                      style: const TextStyle(fontSize: 24),),
                 ),
               ),
               const SizedBox(width: 12),
@@ -305,13 +305,13 @@ class _DayTab extends StatelessWidget {
                   style: const TextStyle(
                       color: Colors.white,
                       fontSize: 13,
-                      fontWeight: FontWeight.w600),
+                      fontWeight: FontWeight.w600,),
                 ),
               ),
               // Move to day popup
               PopupMenuButton<int>(
                 icon: const Icon(Icons.swap_horiz,
-                    color: Colors.white38, size: 20),
+                    color: Colors.white38, size: 20,),
                 color: const Color(0xFF1a1a2e),
                 tooltip: 'Mover para outro dia',
                 itemBuilder: (ctx) => allDays
@@ -320,9 +320,9 @@ class _DayTab extends StatelessWidget {
                           child: Text(
                             'Mover para Dia $n',
                             style: const TextStyle(
-                                color: Colors.white, fontSize: 13),
+                                color: Colors.white, fontSize: 13,),
                           ),
-                        ))
+                        ),)
                     .toList(),
                 onSelected: (toDay) => onMove(a.id, toDay),
               ),

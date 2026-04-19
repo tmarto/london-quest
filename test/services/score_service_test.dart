@@ -124,7 +124,7 @@ void main() {
         3: ['hydepark', 'sciencemuseum'],
         4: ['britishmuseum', 'tussauds', 'buckingham',
             'toweroflondon', 'towerbridge', 'hmsbelfast',
-            'stpauls', 'millennium'],
+            'stpauls', 'millennium',],
       };
       await ScoreService.saveSchedule(custom);
       final loaded = await ScoreService.getSchedule();

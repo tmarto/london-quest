@@ -40,11 +40,11 @@ class _TeachScreenState extends State<TeachScreen> {
                   children: [
                     IconButton(
                       icon: const Icon(Icons.arrow_back,
-                          color: Colors.white70),
+                          color: Colors.white70,),
                       onPressed: () => Navigator.pop(context),
                     ),
                     Text(widget.attraction.emoji,
-                        style: const TextStyle(fontSize: 24)),
+                        style: const TextStyle(fontSize: 24),),
                     const SizedBox(width: 8),
                     Expanded(
                       child: Column(
@@ -53,7 +53,7 @@ class _TeachScreenState extends State<TeachScreen> {
                           const Text(
                             '📖 Modo Ensino',
                             style: TextStyle(
-                                color: Colors.white38, fontSize: 11),
+                                color: Colors.white38, fontSize: 11,),
                           ),
                           Text(
                             widget.attraction.name,
@@ -82,7 +82,7 @@ class _TeachScreenState extends State<TeachScreen> {
                           value: (_currentIndex + 1) / total,
                           backgroundColor: Colors.white12,
                           valueColor: const AlwaysStoppedAnimation<Color>(
-                              Color(0xFF4CAF50)),
+                              Color(0xFF4CAF50),),
                           minHeight: 6,
                         ),
                       ),
@@ -91,7 +91,7 @@ class _TeachScreenState extends State<TeachScreen> {
                     Text(
                       '${_currentIndex + 1}/$total',
                       style: const TextStyle(
-                          color: Colors.white38, fontSize: 13),
+                          color: Colors.white38, fontSize: 13,),
                     ),
                   ],
                 ),
@@ -116,7 +116,7 @@ class _TeachScreenState extends State<TeachScreen> {
                         width: double.infinity,
                         padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.08),
+                          color: Colors.white.withValues(alpha: 0.08),
                           borderRadius: BorderRadius.circular(16),
                           border: Border.all(color: Colors.white24),
                         ),
@@ -154,11 +154,11 @@ class _TeachScreenState extends State<TeachScreen> {
                           child: Container(
                             width: double.infinity,
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 14),
+                                horizontal: 16, vertical: 14,),
                             decoration: BoxDecoration(
                               color: isCorrect
-                                  ? Colors.green.withOpacity(0.2)
-                                  : Colors.white.withOpacity(0.04),
+                                  ? Colors.green.withValues(alpha: 0.2)
+                                  : Colors.white.withValues(alpha: 0.04),
                               borderRadius: BorderRadius.circular(12),
                               border: Border.all(
                                 color: isCorrect
@@ -174,7 +174,7 @@ class _TeachScreenState extends State<TeachScreen> {
                                   height: 30,
                                   decoration: BoxDecoration(
                                     color: isCorrect
-                                        ? Colors.green.withOpacity(0.3)
+                                        ? Colors.green.withValues(alpha: 0.3)
                                         : Colors.white12,
                                     borderRadius:
                                         BorderRadius.circular(15),
@@ -209,7 +209,7 @@ class _TeachScreenState extends State<TeachScreen> {
                                 ),
                                 if (isCorrect)
                                   const Text('✅',
-                                      style: TextStyle(fontSize: 18)),
+                                      style: TextStyle(fontSize: 18),),
                               ],
                             ),
                           ),
@@ -221,10 +221,10 @@ class _TeachScreenState extends State<TeachScreen> {
                         width: double.infinity,
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          color: Colors.amber.withOpacity(0.1),
+                          color: Colors.amber.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(
-                              color: Colors.amber.withOpacity(0.4)),
+                              color: Colors.amber.withValues(alpha: 0.4),),
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -269,11 +269,11 @@ class _TeachScreenState extends State<TeachScreen> {
                           side: BorderSide(
                               color: isFirst
                                   ? Colors.white12
-                                  : Colors.white38),
+                                  : Colors.white38,),
                           padding:
                               const EdgeInsets.symmetric(vertical: 14),
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12)),
+                              borderRadius: BorderRadius.circular(12),),
                         ),
                         child: Text(
                           '⬅️ Anterior',
@@ -281,7 +281,7 @@ class _TeachScreenState extends State<TeachScreen> {
                               color: isFirst
                                   ? Colors.white24
                                   : Colors.white70,
-                              fontSize: 15),
+                              fontSize: 15,),
                         ),
                       ),
                     ),
@@ -297,7 +297,7 @@ class _TeachScreenState extends State<TeachScreen> {
                           padding:
                               const EdgeInsets.symmetric(vertical: 14),
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12)),
+                              borderRadius: BorderRadius.circular(12),),
                           elevation: 0,
                         ),
                         child: Text(
@@ -305,7 +305,7 @@ class _TeachScreenState extends State<TeachScreen> {
                           style: const TextStyle(
                               color: Colors.white,
                               fontSize: 15,
-                              fontWeight: FontWeight.bold),
+                              fontWeight: FontWeight.bold,),
                         ),
                       ),
                     ),

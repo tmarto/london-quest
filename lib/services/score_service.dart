@@ -54,7 +54,7 @@ class ScoreService {
   // ── Scores ────────────────────────────────────────────────────────────────
 
   static Future<void> saveAttractionScore(
-      String player, String attractionId, int score) async {
+      String player, String attractionId, int score,) async {
     final prefs = await SharedPreferences.getInstance();
     final key = 'score_${player}_$attractionId';
     final current = prefs.getInt(key) ?? 0;
@@ -62,7 +62,7 @@ class ScoreService {
   }
 
   static Future<int> getAttractionScore(
-      String player, String attractionId) async {
+      String player, String attractionId,) async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getInt('score_${player}_$attractionId') ?? 0;
   }

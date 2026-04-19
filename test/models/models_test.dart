@@ -50,7 +50,7 @@ void main() {
     test('stores funFact', () => expect(_q1.funFact, 'Interesting fact.'));
     test('imageUrl defaults to null', () => expect(_q1.imageUrl, isNull));
     test('imageUrl can be set', () =>
-        expect(_q2.imageUrl, 'https://example.com/img.jpg'));
+        expect(_q2.imageUrl, 'https://example.com/img.jpg'),);
   });
 
   // ── Attraction ────────────────────────────────────────────────────────────
@@ -61,13 +61,13 @@ void main() {
     test('stores emoji', () => expect(_attraction1.emoji, '🏛️'));
     test('stores description', () => expect(_attraction1.description, 'A test attraction.'));
     test('stores imageUrl', () =>
-        expect(_attraction1.imageUrl, 'https://example.com/a.jpg'));
+        expect(_attraction1.imageUrl, 'https://example.com/a.jpg'),);
     test('maxScore equals question count', () =>
-        expect(_attraction1.maxScore, 2));
+        expect(_attraction1.maxScore, 2),);
     test('maxScore reflects all questions', () =>
-        expect(_attraction2.maxScore, 3));
+        expect(_attraction2.maxScore, 3),);
     test('questions list is accessible', () =>
-        expect(_attraction1.questions.length, 2));
+        expect(_attraction1.questions.length, 2),);
   });
 
   // ── Day ───────────────────────────────────────────────────────────────────
@@ -87,10 +87,10 @@ void main() {
     test('stores emoji', () => expect(day.emoji, '🦕'));
     test('stores attractions', () => expect(day.attractions.length, 2));
     test('maxScore is sum of attraction maxScores', () =>
-        expect(day.maxScore, 5)); // 2 + 3
+        expect(day.maxScore, 5),); // 2 + 3
     test('empty day has maxScore 0', () {
       const empty = Day(
-          number: 99, date: '', title: '', emoji: '', attractions: []);
+          number: 99, date: '', title: '', emoji: '', attractions: [],);
       expect(empty.maxScore, 0);
     });
   });

@@ -101,12 +101,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     if (widget.playerName == 'Ana')
                       IconButton(
                         icon: const Icon(Icons.edit_calendar,
-                            color: Colors.white54, size: 20),
+                            color: Colors.white54, size: 20,),
                         tooltip: 'Editar horário',
                         onPressed: () => Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (_) => const EditScheduleScreen()),
+                              builder: (_) => const EditScheduleScreen(),),
                         ).then((changed) {
                           if (changed == true) _loadScores();
                         }),
@@ -178,7 +178,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Text(
                     'Os teus dias em Londres',
                     style: TextStyle(
-                      color: Colors.white.withOpacity(0.6),
+                      color: Colors.white.withValues(alpha: 0.6),
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
                       letterSpacing: 0.5,
@@ -239,7 +239,7 @@ class _DayCard extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 12),
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.06),
+          color: Colors.white.withValues(alpha: 0.06),
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
             color: done ? Colors.amber : Colors.white12,
@@ -259,13 +259,13 @@ class _DayCard extends StatelessWidget {
                       Text(
                         'Dia ${day.number}',
                         style: const TextStyle(
-                            color: Colors.white38, fontSize: 11),
+                            color: Colors.white38, fontSize: 11,),
                       ),
                       const SizedBox(width: 6),
                       Text(
                         day.date,
                         style: const TextStyle(
-                            color: Colors.white38, fontSize: 11),
+                            color: Colors.white38, fontSize: 11,),
                       ),
                     ],
                   ),
@@ -298,7 +298,7 @@ class _DayCard extends StatelessWidget {
                       Text(
                         '$score/${day.maxScore}',
                         style: const TextStyle(
-                            color: Colors.white38, fontSize: 11),
+                            color: Colors.white38, fontSize: 11,),
                       ),
                     ],
                   ),
@@ -306,7 +306,7 @@ class _DayCard extends StatelessWidget {
                   Text(
                     '${day.attractions.length} atrações',
                     style: const TextStyle(
-                        color: Colors.white24, fontSize: 11),
+                        color: Colors.white24, fontSize: 11,),
                   ),
                 ],
               ),
