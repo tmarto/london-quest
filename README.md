@@ -7,6 +7,18 @@ Ana uses teach mode to prepare the explanations.
 
 ---
 
+## Screenshots
+
+<p align="center">
+  <img src="docs/screenshots/player_select.png" width="18%" alt="Player Select" />
+  <img src="docs/screenshots/home.png" width="18%" alt="Home" />
+  <img src="docs/screenshots/day.png" width="18%" alt="Day Screen" />
+  <img src="docs/screenshots/quiz.png" width="18%" alt="Quiz" />
+  <img src="docs/screenshots/teach.png" width="18%" alt="Teach Mode" />
+</p>
+
+---
+
 ## Players
 
 | Player | Mode |
