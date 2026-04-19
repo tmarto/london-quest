@@ -29,12 +29,11 @@ class _QuizScreenState extends State<QuizScreen> {
   int _score = 0;
   int? _selectedAnswer;
   bool _answered = false;
-  int _timeLeft = 15;
+  int _timeLeft = 20;
+  int _questionDuration = 20;
   Timer? _timer;
   late List<String> _shuffledOptions;
   late int _shuffledCorrectIndex;
-
-  static const int _timerSeconds = 15;
 
   void _shuffleQuestion() {
     final q = _questions[_currentIndex];
@@ -60,7 +59,8 @@ class _QuizScreenState extends State<QuizScreen> {
   }
 
   void _startTimer() {
-    _timeLeft = _timerSeconds;
+    _questionDuration = widget.useEnglish ? 30 : 20;
+    _timeLeft = _questionDuration;
     _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 1), (t) {
       if (!mounted) return;
@@ -216,7 +216,7 @@ class _QuizScreenState extends State<QuizScreen> {
                   ],
                 ),
                 const SizedBox(height: 12),
-                // Progress bar
+                // Question progress bar
                 Row(
                   children: [
                     Expanded(
@@ -239,6 +239,23 @@ class _QuizScreenState extends State<QuizScreen> {
                           color: Colors.white38, fontSize: 13,),
                     ),
                   ],
+                ),
+                const SizedBox(height: 8),
+                // Timer progress bar
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(4),
+                  child: LinearProgressIndicator(
+                    value: _answered ? 0 : _timeLeft / _questionDuration,
+                    backgroundColor: Colors.white12,
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      _timeLeft <= 5
+                          ? Colors.red
+                          : _timeLeft <= (_questionDuration * 0.4).ceil()
+                              ? Colors.orange
+                              : Colors.greenAccent,
+                    ),
+                    minHeight: 5,
+                  ),
                 ),
                 const SizedBox(height: 12),
                 // Scrollable body
