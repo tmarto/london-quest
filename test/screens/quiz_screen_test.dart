@@ -71,9 +71,10 @@ void main() {
     testWidgets('correct answer increments score', (tester) async {
       await tester.pumpWidget(wrap());
       await tester.pump();
-      final correctLabel =
-          ['A', 'B', 'C', 'D'][attraction.questions[0].correctIndex];
-      await tester.tap(find.text(correctLabel));
+      // Tap by option text — position is randomised after shuffle
+      final correctText = attraction.questions[0].options[
+          attraction.questions[0].correctIndex];
+      await tester.tap(find.text(correctText));
       await tester.pump();
       expect(find.text('⭐ 1'), findsOneWidget);
     });
@@ -81,9 +82,12 @@ void main() {
     testWidgets('wrong answer keeps score at 0', (tester) async {
       await tester.pumpWidget(wrap());
       await tester.pump();
-      final wrongIndex = (attraction.questions[0].correctIndex + 1) % 4;
-      final wrongLabel = ['A', 'B', 'C', 'D'][wrongIndex];
-      await tester.tap(find.text(wrongLabel));
+      // Pick any option that is NOT the correct answer text
+      final correctText = attraction.questions[0].options[
+          attraction.questions[0].correctIndex];
+      final wrongText = attraction.questions[0].options
+          .firstWhere((o) => o != correctText);
+      await tester.tap(find.text(wrongText));
       await tester.pump();
       expect(find.text('⭐ 0'), findsOneWidget);
     });
