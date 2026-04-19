@@ -3,6 +3,7 @@ import '../data/trip_data.dart';
 import '../models/day.dart';
 import '../services/score_service.dart';
 import 'day_screen.dart';
+import 'edit_schedule_screen.dart';
 import 'player_select_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -97,6 +98,19 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                     const Spacer(),
+                    if (widget.playerName == 'Ana')
+                      IconButton(
+                        icon: const Icon(Icons.edit_calendar,
+                            color: Colors.white54, size: 20),
+                        tooltip: 'Editar horário',
+                        onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const EditScheduleScreen()),
+                        ).then((changed) {
+                          if (changed == true) _loadScores();
+                        }),
+                      ),
                     TextButton(
                       onPressed: _changePlayer,
                       child: const Text(

@@ -926,6 +926,20 @@ const _millennium = Attraction(
   ],
 );
 
+/// All attractions keyed by ID for O(1) lookup
+final Map<String, Attraction> attractionById = {
+  for (final a in [
+    _westminster, _trafalgar, _nhm, _hydepark, _sciencemuseum,
+    _britishmuseum, _tussauds, _buckingham, _toweroflondon,
+    _towerbridge, _hmsBelfast, _stpauls, _millennium,
+  ]) a.id: a,
+};
+
+/// Default schedule: day number → attraction IDs (in order)
+Map<int, List<String>> get defaultSchedule => {
+  for (final d in tripDays) d.number: d.attractions.map((a) => a.id).toList(),
+};
+
 final List<Day> tripDays = [
   Day(
     number: 1,

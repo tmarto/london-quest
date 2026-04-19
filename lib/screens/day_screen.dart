@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../data/trip_data.dart';
 import '../models/attraction.dart';
 import '../models/day.dart';
 import '../services/score_service.dart';
@@ -18,6 +19,7 @@ class DayScreen extends StatefulWidget {
 class _DayScreenState extends State<DayScreen> {
   Map<String, int> _scores = {};
   int _dayScore = 0;
+  List<Attraction> _attractions = [];
 
   @override
   void initState() {
@@ -26,13 +28,23 @@ class _DayScreenState extends State<DayScreen> {
   }
 
   Future<void> _loadScores() async {
+    // Load custom schedule for this day
+    final schedule = await ScoreService.getSchedule();
+    final ids = schedule[widget.day.number] ??
+        widget.day.attractions.map((a) => a.id).toList();
+    final attractions = ids
+        .map((id) => attractionById[id])
+        .whereType<Attraction>()
+        .toList();
+
     final scores = <String, int>{};
-    for (final a in widget.day.attractions) {
+    for (final a in attractions) {
       scores[a.id] = await ScoreService.getAttractionScore(widget.playerName, a.id);
     }
-    final dayScore = await ScoreService.getDayScore(widget.playerName, widget.day.number);
+    final dayScore = scores.values.fold(0, (sum, s) => sum + s);
     if (!mounted) return;
     setState(() {
+      _attractions = attractions;
       _scores = scores;
       _dayScore = dayScore;
     });
@@ -129,7 +141,7 @@ class _DayScreenState extends State<DayScreen> {
                         style: TextStyle(color: Colors.white70, fontSize: 14),
                       ),
                       Text(
-                        '$_dayScore / ${widget.day.maxScore}',
+                        '$_dayScore / ${_attractions.fold(0, (s, a) => s + a.maxScore)}',
                         style: const TextStyle(
                           color: Colors.amber,
                           fontSize: 22,
@@ -157,9 +169,9 @@ class _DayScreenState extends State<DayScreen> {
               Expanded(
                 child: ListView.builder(
                   padding: const EdgeInsets.fromLTRB(16, 0, 16, 20),
-                  itemCount: widget.day.attractions.length,
+                  itemCount: _attractions.length,
                   itemBuilder: (ctx, i) {
-                    final a = widget.day.attractions[i];
+                    final a = _attractions[i];
                     final score = _scores[a.id] ?? 0;
                     return _AttractionCard(
                       attraction: a,
