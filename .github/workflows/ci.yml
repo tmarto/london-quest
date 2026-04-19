@@ -149,8 +149,9 @@ jobs:
 
       - name: Attach APK to release
         if: startsWith(github.ref, 'refs/tags/v')
-        uses: softprops/action-gh-release@v3
+        uses: softprops/action-gh-release@v2
         with:
+          generate_release_notes: true
           files: build/app/outputs/flutter-apk/london-quest-*.apk
 
   # ── Job 4: Build iOS IPA ──────────────────────────────────────────────────
@@ -189,21 +190,23 @@ jobs:
 
       - name: Package IPA
         run: |
+          VERSION=${GITHUB_REF_NAME:-$GITHUB_SHA}
           cd build/ios/iphoneos
           mkdir -p Payload
           cp -r Runner.app Payload/
-          zip -r london-quest.ipa Payload
+          zip -r london-quest-${VERSION}.ipa Payload
           rm -rf Payload
 
       - name: Upload IPA artifact
         uses: actions/upload-artifact@v7
         with:
           name: london-quest-ios-${{ github.sha }}
-          path: build/ios/iphoneos/london-quest.ipa
+          path: build/ios/iphoneos/london-quest-*.ipa
           retention-days: 30
 
       - name: Attach IPA to release
         if: startsWith(github.ref, 'refs/tags/v')
-        uses: softprops/action-gh-release@v3
+        uses: softprops/action-gh-release@v2
         with:
-          files: build/ios/iphoneos/london-quest.ipa
+          generate_release_notes: true
+          files: build/ios/iphoneos/london-quest-*.ipa
