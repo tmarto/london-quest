@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import '../models/attraction.dart';
 import '../models/question.dart';
@@ -28,13 +29,24 @@ class _QuizScreenState extends State<QuizScreen> {
   bool _answered = false;
   int _timeLeft = 15;
   Timer? _timer;
+  late List<String> _shuffledOptions;
+  late int _shuffledCorrectIndex;
 
   static const int _timerSeconds = 15;
+
+  void _shuffleQuestion() {
+    final q = _questions[_currentIndex];
+    final indexed = q.options.asMap().entries.toList()..shuffle(Random());
+    _shuffledOptions = indexed.map((e) => e.value).toList();
+    _shuffledCorrectIndex =
+        indexed.indexWhere((e) => e.key == q.correctIndex);
+  }
 
   @override
   void initState() {
     super.initState();
     _questions = List<Question>.from(widget.attraction.questions);
+    _shuffleQuestion();
     _startTimer();
   }
 
@@ -64,7 +76,7 @@ class _QuizScreenState extends State<QuizScreen> {
     setState(() {
       _selectedAnswer = index;
       _answered = true;
-      if (index == _questions[_currentIndex].correctIndex) _score++;
+      if (index == _shuffledCorrectIndex) _score++;
     });
   }
 
@@ -89,6 +101,7 @@ class _QuizScreenState extends State<QuizScreen> {
         _currentIndex++;
         _selectedAnswer = null;
         _answered = false;
+        _shuffleQuestion();
       });
       _startTimer();
     }
@@ -96,7 +109,7 @@ class _QuizScreenState extends State<QuizScreen> {
 
   Color _optionColor(int index) {
     if (!_answered) return Colors.white.withValues(alpha: 0.06);
-    if (index == _questions[_currentIndex].correctIndex) {
+    if (index == _shuffledCorrectIndex) {
       return Colors.green.withValues(alpha: 0.25);
     }
     if (index == _selectedAnswer) return Colors.red.withValues(alpha: 0.25);
@@ -105,7 +118,7 @@ class _QuizScreenState extends State<QuizScreen> {
 
   Color _optionBorderColor(int index) {
     if (!_answered) return Colors.white.withValues(alpha: 0.15);
-    if (index == _questions[_currentIndex].correctIndex) return Colors.green;
+    if (index == _shuffledCorrectIndex) return Colors.green;
     if (index == _selectedAnswer) return Colors.red;
     return Colors.white.withValues(alpha: 0.08);
   }
@@ -242,7 +255,7 @@ class _QuizScreenState extends State<QuizScreen> {
                 ),
                 const SizedBox(height: 16),
                 // Answer options
-                ...List.generate(q.options.length, (i) {
+                ...List.generate(_shuffledOptions.length, (i) {
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 10),
                     child: GestureDetector(
@@ -283,19 +296,19 @@ class _QuizScreenState extends State<QuizScreen> {
                             const SizedBox(width: 12),
                             Expanded(
                               child: Text(
-                                q.options[i],
+                                _shuffledOptions[i],
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 14,
                                 ),
                               ),
                             ),
-                            if (_answered && i == q.correctIndex)
+                            if (_answered && i == _shuffledCorrectIndex)
                               const Text('✅',
                                   style: TextStyle(fontSize: 18),),
                             if (_answered &&
                                 i == _selectedAnswer &&
-                                i != q.correctIndex)
+                                i != _shuffledCorrectIndex)
                               const Text('❌',
                                   style: TextStyle(fontSize: 18),),
                           ],
