@@ -74,7 +74,9 @@ void main() {
       // Tap by option text — position is randomised after shuffle
       final correctText = attraction.questions[0].options[
           attraction.questions[0].correctIndex];
-      await tester.tap(find.text(correctText));
+      final correctFinder = find.text(correctText);
+      await tester.ensureVisible(correctFinder);
+      await tester.tap(correctFinder);
       await tester.pump();
       expect(find.text('⭐ 1'), findsOneWidget);
     });
@@ -87,7 +89,9 @@ void main() {
           attraction.questions[0].correctIndex];
       final wrongText = attraction.questions[0].options
           .firstWhere((o) => o != correctText);
-      await tester.tap(find.text(wrongText));
+      final wrongFinder = find.text(wrongText);
+      await tester.ensureVisible(wrongFinder);
+      await tester.tap(wrongFinder);
       await tester.pump();
       expect(find.text('⭐ 0'), findsOneWidget);
     });
