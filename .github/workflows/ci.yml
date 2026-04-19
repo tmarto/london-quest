@@ -33,16 +33,23 @@ jobs:
 
       - name: Check coverage threshold (60%)
         run: |
-          pip install lcov-cobertura --quiet
-          sudo apt-get install -y lcov --quiet
-          COVERAGE=$(lcov --summary coverage/lcov.info 2>&1 | grep "lines" | grep -oP '\d+\.\d+(?=%)' | head -1)
-          echo "Line coverage: ${COVERAGE}%"
-          python3 -c "
-          cov = float('${COVERAGE}')
-          print(f'Coverage: {cov:.1f}%')
-          assert cov >= 60, f'Coverage {cov:.1f}% is below 60% threshold'
+          python3 - << 'EOF'
+          import re, sys
+          with open('coverage/lcov.info') as f:
+              content = f.read()
+          counts = re.findall(r'^DA:\d+,(\d+)', content, re.MULTILINE)
+          total = len(counts)
+          covered = sum(1 for x in counts if x != '0')
+          if total == 0:
+              print('ERROR: No coverage data found in lcov.info')
+              sys.exit(1)
+          cov = covered / total * 100
+          print(f'Coverage: {cov:.1f}% ({covered}/{total} lines)')
+          if cov < 60:
+              print(f'FAIL: Coverage {cov:.1f}% is below 60% threshold')
+              sys.exit(1)
           print('Coverage threshold passed.')
-          "
+          EOF
 
       - name: Upload coverage report
         if: always()
