@@ -57,7 +57,7 @@ jobs:
 
       - name: Upload coverage report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: coverage-report
           path: coverage/lcov.info
@@ -131,14 +131,14 @@ jobs:
              build/app/outputs/flutter-apk/london-quest-${VERSION}.apk
 
       - name: Upload APK artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: london-quest-${{ github.sha }}
           path: build/app/outputs/flutter-apk/london-quest-*.apk
           retention-days: 30
 
       - name: Upload debug symbols
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: debug-symbols-${{ github.sha }}
           path: build/debug-info/
