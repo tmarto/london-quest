@@ -7,7 +7,15 @@ import UIKit
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
-    GeneratedPluginRegistrant.register(with: self)
-    return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+    let flutterEngine = FlutterEngine(name: "main_engine")
+    flutterEngine.run()
+    GeneratedPluginRegistrant.register(with: flutterEngine)
+
+    let controller = FlutterViewController(engine: flutterEngine, nibName: nil, bundle: nil)
+    window = UIWindow(frame: UIScreen.main.bounds)
+    window?.rootViewController = controller
+    window?.makeKeyAndVisible()
+
+    return true
   }
 }
