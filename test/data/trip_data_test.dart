@@ -56,16 +56,16 @@ void main() {
       }
     });
 
-    test('total question count is 130', () {
+    test('total question count is 260 (20 per attraction)', () {
       final total =
           attractionById.values.fold(0, (sum, a) => sum + a.questions.length);
-      expect(total, 130);
+      expect(total, 260);
     });
 
-    test('every attraction has exactly 10 questions', () {
+    test('every attraction has exactly 20 questions', () {
       for (final a in attractionById.values) {
-        expect(a.questions.length, 10,
-            reason: '${a.name} has ${a.questions.length} questions, expected 10',);
+        expect(a.questions.length, 20,
+            reason: '${a.name} has ${a.questions.length} questions, expected 20',);
       }
     });
 

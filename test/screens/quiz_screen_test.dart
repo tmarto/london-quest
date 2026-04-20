@@ -23,7 +23,11 @@ void main() {
     testWidgets('renders first question text', (tester) async {
       await tester.pumpWidget(wrap());
       await tester.pump();
-      expect(find.text(attraction.questions[0].text), findsOneWidget);
+      // Quiz picks 10 random questions — verify that at least one question from
+      // the bank is displayed (not necessarily index 0).
+      final anyShown = attraction.questions
+          .any((q) => find.text(q.text).evaluate().isNotEmpty);
+      expect(anyShown, isTrue);
     });
 
     testWidgets('shows question counter 1/10', (tester) async {
@@ -71,9 +75,10 @@ void main() {
     testWidgets('correct answer increments score', (tester) async {
       await tester.pumpWidget(wrap());
       await tester.pump();
-      // Tap by option text — position is randomised after shuffle
-      final correctText = attraction.questions[0].options[
-          attraction.questions[0].correctIndex];
+      // Quiz randomly picks 10 of 20 questions — find which one is rendered.
+      final shownQ = attraction.questions
+          .firstWhere((q) => find.text(q.text).evaluate().isNotEmpty);
+      final correctText = shownQ.options[shownQ.correctIndex];
       final correctFinder = find.text(correctText);
       await tester.ensureVisible(correctFinder);
       await tester.tap(correctFinder);
@@ -84,11 +89,12 @@ void main() {
     testWidgets('wrong answer keeps score at 0', (tester) async {
       await tester.pumpWidget(wrap());
       await tester.pump();
-      // Pick any option that is NOT the correct answer text
-      final correctText = attraction.questions[0].options[
-          attraction.questions[0].correctIndex];
-      final wrongText = attraction.questions[0].options
-          .firstWhere((o) => o != correctText);
+      // Quiz randomly picks 10 of 20 questions — find which one is rendered.
+      final shownQ = attraction.questions
+          .firstWhere((q) => find.text(q.text).evaluate().isNotEmpty);
+      final correctText = shownQ.options[shownQ.correctIndex];
+      final wrongText =
+          shownQ.options.firstWhere((o) => o != correctText);
       final wrongFinder = find.text(wrongText);
       await tester.ensureVisible(wrongFinder);
       await tester.tap(wrongFinder);

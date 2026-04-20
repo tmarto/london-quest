@@ -62,10 +62,10 @@ void main() {
     test('stores description', () => expect(_attraction1.description, 'A test attraction.'));
     test('stores imageUrl', () =>
         expect(_attraction1.imageUrl, 'https://example.com/a.jpg'),);
-    test('maxScore equals question count', () =>
-        expect(_attraction1.maxScore, 2),);
-    test('maxScore reflects all questions', () =>
-        expect(_attraction2.maxScore, 3),);
+    test('maxScore is always 10 (quiz bank size)', () =>
+        expect(_attraction1.maxScore, 10),);
+    test('maxScore is always 10 regardless of question count', () =>
+        expect(_attraction2.maxScore, 10),);
     test('questions list is accessible', () =>
         expect(_attraction1.questions.length, 2),);
   });
@@ -87,7 +87,7 @@ void main() {
     test('stores emoji', () => expect(day.emoji, '🦕'));
     test('stores attractions', () => expect(day.attractions.length, 2));
     test('maxScore is sum of attraction maxScores', () =>
-        expect(day.maxScore, 5),); // 2 + 3
+        expect(day.maxScore, 20),); // 10 + 10 (maxScore is always 10 per attraction)
     test('empty day has maxScore 0', () {
       const empty = Day(
           number: 99, date: '', title: '', emoji: '', attractions: [],);

@@ -29,9 +29,9 @@ void main() {
       expect(find.textContaining('CURIOSIDADE'), findsOneWidget);
     });
 
-    testWidgets('shows progress counter 1/10', (tester) async {
+    testWidgets('shows progress counter 1/20', (tester) async {
       await tester.pumpWidget(wrap());
-      expect(find.text('1/10'), findsOneWidget);
+      expect(find.text('1/20'), findsOneWidget);
     });
 
     testWidgets('shows first question text', (tester) async {
@@ -57,7 +57,7 @@ void main() {
       await tester.pumpWidget(wrap());
       await tester.tap(find.text('Próxima ➡️'));
       await tester.pump();
-      expect(find.text('2/10'), findsOneWidget);
+      expect(find.text('2/20'), findsOneWidget);
       expect(find.text(attraction.questions[1].text), findsOneWidget);
     });
 
@@ -78,7 +78,7 @@ void main() {
       await tester.pump();
       await tester.tap(find.text('⬅️ Anterior'));
       await tester.pump();
-      expect(find.text('1/10'), findsOneWidget);
+      expect(find.text('1/20'), findsOneWidget);
     });
 
     testWidgets('back arrow icon exists', (tester) async {

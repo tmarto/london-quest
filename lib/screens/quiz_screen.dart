@@ -47,7 +47,10 @@ class _QuizScreenState extends State<QuizScreen> {
   @override
   void initState() {
     super.initState();
-    _questions = List<Question>.from(widget.attraction.questions);
+    // Randomly pick 10 questions from the full bank each session.
+    final bank = List<Question>.from(widget.attraction.questions)
+      ..shuffle(Random());
+    _questions = bank.take(10).toList();
     _shuffleQuestion();
     _startTimer();
   }

@@ -20,5 +20,6 @@ class Attraction {
     required this.questions,
   });
 
-  int get maxScore => questions.length;
+  /// Quiz always draws 10 questions regardless of bank size.
+  int get maxScore => 10;
 }
