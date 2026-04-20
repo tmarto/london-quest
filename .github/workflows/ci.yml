@@ -205,13 +205,13 @@ jobs:
 
     steps:
       - name: Download APK
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: london-quest-android-${{ github.sha }}
           path: release-assets/
 
       - name: Download IPA
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: london-quest-ios-${{ github.sha }}
           path: release-assets/
