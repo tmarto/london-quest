@@ -1,6 +1,6 @@
 name: london_quest
 description: London Quiz App para a família Marto - viagem 2026
-version: 1.0.0+1
+version: 1.0.4+4
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
