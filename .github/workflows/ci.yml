@@ -20,7 +20,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
@@ -60,7 +60,7 @@ jobs:
 
       - name: Upload coverage report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: coverage-report
           path: coverage/lcov.info
@@ -73,7 +73,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
@@ -109,7 +109,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
@@ -129,19 +129,19 @@ jobs:
 
       - name: Rename APK
         run: |
-          VERSION=${GITHUB_REF_NAME:-$GITHUB_SHA}
+          VERSION=$(echo "${GITHUB_REF_NAME:-$GITHUB_SHA}" | tr '/' '-')
           cp build/app/outputs/flutter-apk/app-release.apk \
              build/app/outputs/flutter-apk/london-quest-${VERSION}.apk
 
       - name: Upload APK artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: london-quest-android-${{ github.sha }}
           path: build/app/outputs/flutter-apk/london-quest-*.apk
           retention-days: 30
 
       - name: Upload debug symbols
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: android-debug-symbols-${{ github.sha }}
           path: build/debug-info/
@@ -154,7 +154,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
@@ -164,7 +164,7 @@ jobs:
           cache: true
 
       - name: Cache CocoaPods
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ios/Pods
           key: pods-${{ runner.os }}-${{ hashFiles('ios/Podfile.lock') }}
@@ -183,7 +183,7 @@ jobs:
 
       - name: Package IPA
         run: |
-          VERSION=${GITHUB_REF_NAME:-$GITHUB_SHA}
+          VERSION=$(echo "${GITHUB_REF_NAME:-$GITHUB_SHA}" | tr '/' '-')
           cd build/ios/iphoneos
           mkdir -p Payload
           cp -r Runner.app Payload/
@@ -191,7 +191,7 @@ jobs:
           rm -rf Payload
 
       - name: Upload IPA artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: london-quest-ios-${{ github.sha }}
           path: build/ios/iphoneos/london-quest-*.ipa
@@ -205,13 +205,13 @@ jobs:
 
     steps:
       - name: Download APK
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: london-quest-android-${{ github.sha }}
           path: release-assets/
 
       - name: Download IPA
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: london-quest-ios-${{ github.sha }}
           path: release-assets/
@@ -220,7 +220,7 @@ jobs:
         run: ls -lh release-assets/
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           generate_release_notes: true
           files: release-assets/*
