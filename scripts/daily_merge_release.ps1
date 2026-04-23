@@ -28,7 +28,7 @@ Log "Found $($prs.Count) open PR(s)."
 $merged = 0
 foreach ($pr in $prs) {
     $n = $pr.number
-    Log "Checking PR #$n: $($pr.title)"
+    Log "Checking PR #${n}: $($pr.title)"
 
     # Get check statuses
     $checks = & $Gh pr checks $n --json name,state,conclusion 2>&1 |
@@ -44,21 +44,21 @@ foreach ($pr in $prs) {
     }
 
     if ($failing) {
-        Log "  PR #$n has $($failing.Count) failing check(s). Skipping."
+        Log "  PR #${n} has $($failing.Count) failing check(s). Skipping."
         continue
     }
     if ($pending) {
-        Log "  PR #$n still has $($pending.Count) pending check(s). Skipping."
+        Log "  PR #${n} still has $($pending.Count) pending check(s). Skipping."
         continue
     }
 
-    Log "  PR #$n all checks passed. Merging (squash)..."
+    Log "  PR #${n} all checks passed. Merging (squash)..."
     $result = & $Gh pr merge $n --squash --delete-branch 2>&1
     if ($LASTEXITCODE -eq 0) {
-        Log "  PR #$n merged."
+        Log "  PR #${n} merged."
         $merged++
     } else {
-        Log "  PR #$n merge failed: $result"
+        Log "  PR #${n} merge failed: $result"
     }
 }
 
