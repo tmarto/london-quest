@@ -2486,12 +2486,115 @@ const _millennium = Attraction(
   ],
 );
 
+// ── Bónus: Coimbra ────────────────────────────────────────────────────────────
+const _coimbra = Attraction(
+  id: 'coimbra',
+  name: 'Bónus — Coimbra',
+  emoji: '🎓',
+  color: Color(0xFF8B1A1A),
+  description: 'A cidade dos estudantes, do Mondego e de sete séculos de saber.',
+  imageUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/Coimbra_(Portugal)_(16699051830).jpg',
+  questions: [
+    Question(
+      text: 'Qual rio passa por Coimbra?',
+      textEn: 'Which river flows through Coimbra?',
+      options: ['Rio Mondego', 'Rio Tejo', 'Rio Douro', 'Rio Guadiana'],
+      optionsEn: ['River Mondego', 'River Tagus', 'River Douro', 'River Guadiana'],
+      correctIndex: 0,
+      funFact: 'O Mondego é o rio mais longo que nasce e termina inteiramente em Portugal — tem 234 km.',
+      funFactEn: 'The Mondego is the longest river that starts and ends entirely within Portugal — 234 km long.',
+    ),
+    Question(
+      text: 'Em que ano foi fundada a Universidade de Coimbra?',
+      textEn: 'In what year was the University of Coimbra founded?',
+      options: ['1290', '1540', '1415', '1820'],
+      optionsEn: ['1290', '1540', '1415', '1820'],
+      correctIndex: 0,
+      funFact: 'É uma das universidades mais antigas do mundo ainda em funcionamento, com mais de 730 anos!',
+      funFactEn: 'It is one of the oldest universities in the world still in operation, over 730 years old!',
+    ),
+    Question(
+      text: 'A Universidade de Coimbra tornou-se Património Mundial da UNESCO em que ano?',
+      textEn: 'In what year did the University of Coimbra become a UNESCO World Heritage Site?',
+      options: ['2013', '1990', '2001', '2018'],
+      optionsEn: ['2013', '1990', '2001', '2018'],
+      correctIndex: 0,
+      funFact: 'Foi reconhecida pelos sete séculos de produção de conhecimento e pela sua arquitectura única.',
+      funFactEn: 'It was recognised for seven centuries of knowledge production and its unique architecture.',
+    ),
+    Question(
+      text: 'Como se chama a famosa biblioteca barroca da Universidade de Coimbra?',
+      textEn: 'What is the name of the famous baroque library at the University of Coimbra?',
+      options: ['Biblioteca Joanina', 'Biblioteca Nacional', 'Biblioteca de Mafra', 'Biblioteca de Évora'],
+      optionsEn: ['Biblioteca Joanina', 'National Library', 'Mafra Library', 'Évora Library'],
+      correctIndex: 0,
+      funFact: 'Tem morcegos vivos que saem à noite para comer os insectos que poderiam destruir os livros antigos!',
+      funFactEn: 'It has live bats that come out at night to eat the insects that could destroy the ancient books!',
+    ),
+    Question(
+      text: 'Coimbra foi capital de Portugal durante mais de 100 anos. Qual foi a capital seguinte?',
+      textEn: 'Coimbra was capital of Portugal for over 100 years. What was the next capital?',
+      options: ['Lisboa', 'Porto', 'Braga', 'Évora'],
+      optionsEn: ['Lisbon', 'Porto', 'Braga', 'Évora'],
+      correctIndex: 0,
+      funFact: 'Coimbra foi capital de 1139 a 1255. D. Afonso II e outros reis estão enterrados na Sé Velha de Coimbra.',
+      funFactEn: 'Coimbra was capital from 1139 to 1255. King Afonso II and other kings are buried in the Old Cathedral.',
+    ),
+    Question(
+      text: 'Como se chama o parque em Coimbra com réplicas em miniatura de monumentos portugueses?',
+      textEn: 'What is the name of the park in Coimbra with miniature replicas of Portuguese monuments?',
+      options: ['Portugal dos Pequenitos', 'Parque Verde', 'Jardim Botânico', 'Mata Nacional'],
+      optionsEn: ['Portugal dos Pequenitos', 'Parque Verde', 'Botanical Garden', 'National Forest'],
+      correctIndex: 0,
+      funFact: 'Foi inaugurado em 1940 e foi especialmente criado para as crianças explorarem a história de Portugal.',
+      funFactEn: 'It opened in 1940 and was specially created for children to explore the history of Portugal.',
+    ),
+    Question(
+      text: 'Que roupa usam os estudantes universitários de Coimbra em tradições académicas?',
+      textEn: 'What do Coimbra university students wear for academic traditions?',
+      options: ['Capa e batina preta', 'Farda azul', 'Beca simples', 'Uniforme castanho'],
+      optionsEn: ['Black cape and gown', 'Blue uniform', 'Simple robe', 'Brown uniform'],
+      correctIndex: 0,
+      funFact: 'A tradição da capa e batina vem do século XIII — tem a mesma aparência há mais de 700 anos!',
+      funFactEn: 'The cape and gown tradition dates to the 13th century — it has looked the same for over 700 years!',
+    ),
+    Question(
+      text: 'O Fado de Coimbra é diferente do de Lisboa. Quem o canta tradicionalmente?',
+      textEn: 'Coimbra Fado is different from Lisbon\'s. Who traditionally sings it?',
+      options: ['Homens estudantes universitários', 'Só mulheres', 'Crianças do conservatório', 'Qualquer pessoa'],
+      optionsEn: ['Male university students', 'Women only', 'Conservatory children', 'Anyone'],
+      correctIndex: 0,
+      funFact: 'O Fado de Coimbra é mais lento e melancólico que o de Lisboa, e só pode ser cantado por homens durante os estudos.',
+      funFactEn: 'Coimbra Fado is slower and more melancholic than Lisbon\'s, and can only be sung by men during their studies.',
+    ),
+    Question(
+      text: 'Quantos estudantes universitários tem Coimbra, numa cidade de 100 000 habitantes?',
+      textEn: 'How many university students does Coimbra have, in a city of 100,000 inhabitants?',
+      options: ['Mais de 25 000', 'Cerca de 5 000', 'Mais de 50 000', 'Menos de 1 000'],
+      optionsEn: ['Over 25,000', 'Around 5,000', 'Over 50,000', 'Under 1,000'],
+      correctIndex: 0,
+      funFact: 'Um em cada quatro habitantes de Coimbra é estudante universitário! Por isso se chama a Cidade dos Estudantes.',
+      funFactEn: 'One in four Coimbra residents is a university student! That is why it is called the City of Students.',
+    ),
+    Question(
+      text: 'Que animal desfila todos os anos na Queima das Fitas de Coimbra?',
+      textEn: 'Which animal parades every year at Coimbra\'s Queima das Fitas festival?',
+      options: ['Uma cabra chamada Baleia', 'Um touro', 'Um burro', 'Um galo'],
+      optionsEn: ['A goat called Baleia', 'A bull', 'A donkey', 'A rooster'],
+      correctIndex: 0,
+      funFact: 'A cabra "Baleia" desfila há mais de 100 anos na Queima das Fitas — é o mascote oficial dos estudantes de Coimbra!',
+      funFactEn: 'The goat "Baleia" has paraded for over 100 years at the Queima das Fitas — it is the official mascot of Coimbra students!',
+    ),
+  ],
+);
+
 /// All attractions keyed by ID for O(1) lookup
 final Map<String, Attraction> attractionById = {
   for (final a in [
     _westminster, _trafalgar, _nhm, _hydepark, _sciencemuseum,
     _britishmuseum, _tussauds, _buckingham, _toweroflondon,
     _towerbridge, _hmsBelfast, _stpauls, _millennium,
+    _coimbra,
   ]) a.id: a,
 };
 
@@ -2528,5 +2631,12 @@ final List<Day> tripDays = [
     title: 'Torre, Tamisa & Pontes',
     emoji: '🏰',
     attractions: [_toweroflondon, _towerbridge, _hmsBelfast, _stpauls, _millennium],
+  ),
+  const Day(
+    number: 5,
+    date: 'Bónus',
+    title: 'Coimbra — Cidade dos Estudantes',
+    emoji: '🎓',
+    attractions: [_coimbra],
   ),
 ];
