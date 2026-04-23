@@ -102,8 +102,8 @@ void main() {
       expect(await ScoreService.getTotalScore('Pedro'), 0);
     });
 
-    test('getTotalMaxScore returns 130', () {
-      expect(ScoreService.getTotalMaxScore(), 130);
+    test('getTotalMaxScore returns 140', () {
+      expect(ScoreService.getTotalMaxScore(), 140);
     });
   });
 
@@ -112,7 +112,7 @@ void main() {
   group('ScoreService.schedule', () {
     test('getSchedule returns default when nothing saved', () async {
       final s = await ScoreService.getSchedule();
-      expect(s.keys.toSet(), {1, 2, 3, 4});
+      expect(s.keys.toSet(), {1, 2, 3, 4, 5});
       expect(s[1], containsAll(['westminster', 'trafalgar']));
       expect(s[2], containsAll(['nhm', 'hydepark', 'sciencemuseum']));
     });
@@ -142,7 +142,7 @@ void main() {
     test('getSchedule handles corrupt data gracefully', () async {
       SharedPreferences.setMockInitialValues({'custom_schedule': '{bad json'});
       final s = await ScoreService.getSchedule();
-      expect(s.keys.toSet(), {1, 2, 3, 4}); // falls back to default
+      expect(s.keys.toSet(), {1, 2, 3, 4, 5}); // falls back to default
     });
 
     test('getDayScore respects custom schedule', () async {

@@ -3,11 +3,11 @@ import 'package:london_quest/data/trip_data.dart';
 
 void main() {
   group('tripDays', () {
-    test('has exactly 4 days', () => expect(tripDays.length, 4));
+    test('has exactly 5 days', () => expect(tripDays.length, 5));
 
-    test('day numbers are 1 through 4', () {
+    test('day numbers are 1 through 5', () {
       final numbers = tripDays.map((d) => d.number).toList()..sort();
-      expect(numbers, [1, 2, 3, 4]);
+      expect(numbers, [1, 2, 3, 4, 5]);
     });
 
     test('all days have non-empty titles', () {
@@ -37,8 +37,8 @@ void main() {
   });
 
   group('attractionById', () {
-    test('has exactly 13 attractions', () =>
-        expect(attractionById.length, 13),);
+    test('has exactly 14 attractions', () =>
+        expect(attractionById.length, 14),);
 
     test('all attraction IDs are unique across days', () {
       final ids = tripDays
@@ -56,14 +56,22 @@ void main() {
       }
     });
 
-    test('total question count is 260 (20 per attraction)', () {
+    test('total question count is 270 (13×20 London + 1×10 Bonus)', () {
       final total =
           attractionById.values.fold(0, (sum, a) => sum + a.questions.length);
-      expect(total, 260);
+      expect(total, 270);
     });
 
-    test('every attraction has exactly 20 questions', () {
+    test('every attraction has at least 10 questions', () {
       for (final a in attractionById.values) {
+        expect(a.questions.length, greaterThanOrEqualTo(10),
+            reason: '${a.name} has ${a.questions.length} questions, expected >= 10',);
+      }
+    });
+
+    test('London attractions have exactly 20 questions each', () {
+      for (final a in attractionById.values) {
+        if (a.id == 'coimbra') continue; // bonus round has 10
         expect(a.questions.length, 20,
             reason: '${a.name} has ${a.questions.length} questions, expected 20',);
       }
@@ -102,7 +110,7 @@ void main() {
   });
 
   group('defaultSchedule', () {
-    test('has 4 days', () => expect(defaultSchedule.length, 4));
+    test('has 5 days', () => expect(defaultSchedule.length, 5));
 
     test('contains all 13 attraction IDs', () {
       final ids = defaultSchedule.values.expand((list) => list).toSet();
