@@ -127,7 +127,7 @@ jobs:
           TAG="${GITHUB_REF_NAME}"          # e.g. v1.0.8
           VERSION="${TAG#v}"               # e.g. 1.0.8
           BUILD="${{ github.run_number }}" # unique build number
-          sed -i "s/^version:.*/version: ${VERSION}+${BUILD}/" pubspec.yaml
+          perl -i -pe "s/^version:.*/version: ${VERSION}+${BUILD}/" pubspec.yaml
           echo "pubspec version set to ${VERSION}+${BUILD}"
 
       - name: Build APK (obfuscated)
@@ -188,7 +188,7 @@ jobs:
           TAG="${GITHUB_REF_NAME}"
           VERSION="${TAG#v}"
           BUILD="${{ github.run_number }}"
-          sed -i "s/^version:.*/version: ${VERSION}+${BUILD}/" pubspec.yaml
+          perl -i -pe "s/^version:.*/version: ${VERSION}+${BUILD}/" pubspec.yaml
           echo "pubspec version set to ${VERSION}+${BUILD}"
 
       - name: Install CocoaPods dependencies
