@@ -17,15 +17,32 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _totalScore = 0;
-  List<int> _dayScores = List.filled(4, 0);
-  final int _totalMax = ScoreService.getTotalMaxScore();
+  List<int> _dayScores = [];
   String _buildVersion = '';
+  bool _bonusUnlocked = false;
+
+  bool get _isAna => widget.playerName == 'Ana';
+
+  List<Day> get _visibleDays => _isAna
+      ? tripDays
+      : tripDays.where((d) => d.number < 5 || _bonusUnlocked).toList();
+
+  int get _totalMax => _visibleDays
+      .expand((d) => d.attractions)
+      .fold(0, (sum, a) => sum + a.maxScore);
 
   @override
   void initState() {
     super.initState();
-    _loadScores();
+    _loadBonusState();
     _loadVersion();
+  }
+
+  Future<void> _loadBonusState() async {
+    final unlocked = await ScoreService.isBonusUnlocked();
+    if (!mounted) return;
+    setState(() => _bonusUnlocked = unlocked);
+    await _loadScores();
   }
 
   Future<void> _loadVersion() async {
@@ -37,10 +54,11 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _loadScores() async {
-    final total = await ScoreService.getTotalScore(widget.playerName);
+    final days = _visibleDays;
     final dayScores = await Future.wait(
-      tripDays.map((d) => ScoreService.getDayScore(widget.playerName, d.number)),
+      days.map((d) => ScoreService.getDayScore(widget.playerName, d.number)),
     );
+    final total = dayScores.fold(0, (a, b) => a + b);
     if (!mounted) return;
     setState(() {
       _totalScore = total;
@@ -109,7 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                     const Spacer(),
-                    if (widget.playerName == 'Ana')
+                    if (_isAna) ...[
                       IconButton(
                         icon: const Icon(Icons.edit_calendar,
                             color: Colors.white54, size: 20,),
@@ -122,6 +140,23 @@ class _HomeScreenState extends State<HomeScreen> {
                           if (changed == true) _loadScores();
                         }),
                       ),
+                      IconButton(
+                        icon: Text(
+                          _bonusUnlocked ? '🎓🔓' : '🎓🔒',
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                        tooltip: _bonusUnlocked
+                            ? 'Bónus visível — toca para esconder'
+                            : 'Bónus oculto — toca para mostrar',
+                        onPressed: () async {
+                          final next = !_bonusUnlocked;
+                          await ScoreService.setBonusUnlocked(next);
+                          if (!mounted) return;
+                          setState(() => _bonusUnlocked = next);
+                          await _loadScores();
+                        },
+                      ),
+                    ],
                     TextButton(
                       onPressed: _changePlayer,
                       child: const Text(
@@ -200,9 +235,9 @@ class _HomeScreenState extends State<HomeScreen> {
               Expanded(
                 child: ListView.builder(
                   padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
-                  itemCount: tripDays.length,
+                  itemCount: _visibleDays.length,
                   itemBuilder: (ctx, i) {
-                    final day = tripDays[i];
+                    final day = _visibleDays[i];
                     final score = i < _dayScores.length ? _dayScores[i] : 0;
                     return _DayCard(
                       day: day,

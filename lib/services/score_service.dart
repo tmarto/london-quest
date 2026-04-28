@@ -5,6 +5,25 @@ import '../data/trip_data.dart';
 class ScoreService {
   static const _playerKey   = 'current_player';
   static const _scheduleKey = 'custom_schedule';
+  static const _bonusKey    = 'bonus_unlocked_manual';
+
+  // Auto-unlock: Friday 25 April 2026 at 18:00
+  static final _bonusAutoUnlock = DateTime(2026, 4, 25, 18, 0);
+
+  // ── Bonus round ───────────────────────────────────────────────────────────
+
+  /// True if bonus visible to Inês/Pedro (time passed OR Ana manually enabled).
+  static Future<bool> isBonusUnlocked() async {
+    if (DateTime.now().isAfter(_bonusAutoUnlock)) return true;
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(_bonusKey) ?? false;
+  }
+
+  /// Ana's manual toggle. [value]=true enables early; false hides until auto-time.
+  static Future<void> setBonusUnlocked(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_bonusKey, value);
+  }
 
   // ── Player ────────────────────────────────────────────────────────────────
 
