@@ -12,7 +12,7 @@ Ana uses teach mode to prepare the explanations.
 <p align="center">
   <img src="docs/screenshots/player_select.png" width="18%" alt="Player Select" />
   <img src="docs/screenshots/home.png" width="18%" alt="Home (Pedro)" />
-  <img src="docs/screenshots/home_ana.png" width="18%" alt="Home (Ana)" />
+  <img src="docs/screenshots/home_ana.png?v=2" width="18%" alt="Home (Ana)" />
   <img src="docs/screenshots/quiz.png" width="18%" alt="Quiz" />
   <img src="docs/screenshots/lang_dialog.png" width="18%" alt="Language Dialog" />
 </p>
