@@ -11,10 +11,10 @@ Ana uses teach mode to prepare the explanations.
 
 <p align="center">
   <img src="docs/screenshots/player_select.png" width="18%" alt="Player Select" />
-  <img src="docs/screenshots/home.png" width="18%" alt="Home" />
-  <img src="docs/screenshots/day.png" width="18%" alt="Day Screen" />
+  <img src="docs/screenshots/home.png" width="18%" alt="Home (Pedro)" />
+  <img src="docs/screenshots/home_ana.png" width="18%" alt="Home (Ana)" />
   <img src="docs/screenshots/quiz.png" width="18%" alt="Quiz" />
-  <img src="docs/screenshots/teach.png" width="18%" alt="Teach Mode" />
+  <img src="docs/screenshots/lang_dialog.png" width="18%" alt="Language Dialog" />
 </p>
 
 ---
@@ -25,22 +25,24 @@ Ana uses teach mode to prepare the explanations.
 |--------|------|
 | 👧 Inês | Quiz (PT or EN) |
 | 👦 Pedro | Quiz (PT or EN) |
-| 👩 Ana | Teach mode + day score reset |
+| 👩 Ana | Teach mode + day score reset + bonus toggle |
 
 ---
 
 ## Features
 
-- **4 days × 13 attractions × 10 questions** — 130 questions total
-- **Bilingual quiz** — choose Portuguese (normal points) or English (2× points)
+- **4 days × 13 attractions** — 20 questions per attraction, 10 drawn randomly each session
+- **Bonus round** — Coimbra (Day 5), unlocked by Ana for Inês & Pedro when ready
+- **Bilingual quiz** — Portuguese (normal points) or English (2× points)
+- **Timer** — 20 s per question (PT) or 30 s (EN), with animated progress bar
 - Answer options shuffled randomly on every question
 - Per-player best score saved locally (SharedPreferences)
 - Retake any quiz — only improves score, never lowers it
-- 15-second timer per question
 - Fun fact revealed after each answer
 - Attraction photo loaded from Wikimedia Commons
-- Ana's teach mode: all questions with correct answers + explanations revealed
+- Ana's teach mode: all 20 questions with correct answers + explanations
 - Ana can reset day scores for Pedro or Inês individually
+- Ana controls bonus round visibility via 🎓🔓 / 🎓🔒 toggle
 
 ---
 
@@ -52,6 +54,7 @@ Ana uses teach mode to prepare the explanations.
 | 2 | 30 Apr | Natural History Museum, Hyde Park, Science Museum |
 | 3 | 1 May | British Museum, Madame Tussauds, Buckingham Palace |
 | 4 | 2 May | Tower of London, Tower Bridge, HMS Belfast, St Paul's, Millennium Bridge |
+| 🎓 | Bónus | Coimbra — Cidade dos Estudantes |
 
 ---
 
@@ -59,7 +62,7 @@ Ana uses teach mode to prepare the explanations.
 
 - Flutter (Dart) — Android & iOS
 - `shared_preferences` — local score persistence
-- `package_info_plus` — build version display
+- `package_info_plus` — build version display (auto-synced with git tag)
 - Wikimedia Commons — attraction images
 - GitHub Actions — CI/CD: test → build APK + IPA → GitHub Release on tag
 
@@ -68,11 +71,13 @@ Ana uses teach mode to prepare the explanations.
 ## CI/CD
 
 Every push to `main`:
-1. `flutter analyze` + `flutter test`
-2. `flutter build apk --release` (Ubuntu)
-3. `flutter build ipa --no-codesign` (macOS)
+1. `flutter analyze` + `flutter test` (coverage ≥ 60%)
+2. Integration tests on Android emulator
+3. `flutter build apk --release` (Ubuntu)
+4. `flutter build ipa --no-codesign` (macOS)
 
 On `v*` tag push:
+- Version in `pubspec.yaml` automatically set from tag name before build
 - GitHub Release created automatically
 - APK + IPA attached to the release
 
